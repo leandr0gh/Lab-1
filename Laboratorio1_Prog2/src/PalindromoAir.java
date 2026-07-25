@@ -28,5 +28,32 @@ public class PalindromoAir {
         return printPassengers(index+1);
     }
     
+    public double income (int index){
+        double monto=0;
+        
+        // caso base
+        if (index >= asientos.length){
+            return 0;
+        }
+        
+        //por si el asiento ya se encuentra ocupado
+        if (asientos[index] != null){
+            monto=asientos[index].getMontoFinal();
+            return monto +income(index+1);
+        }
+        
+        // en caso de estar vacio solo se llama nuevamente para la recursividad
+        return income(index+1);
+    }
+    
+    public void reset (int index){
+        if (index >= asientos.length){
+            return;
+        }
+        
+        asientos[index]=null;
+        
+        reset(index+1);
+    }
     
 }

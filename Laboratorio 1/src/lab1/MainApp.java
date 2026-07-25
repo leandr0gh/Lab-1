@@ -27,6 +27,26 @@ public class MainApp extends JFrame {
         add(panelAsiento, BorderLayout.WEST);
         
         
+        JPanel panelArriba=new JPanel();
+        panelArriba.add(new JLabel("Nombre del pasajero:"));
+        panelArriba.add(campoNombre);
+        
+        JButton venderButton=new JButton("Sell ticket");
+        JButton cancelButton=new JButton("Cancel Ticket");
+        JButton dispatchButton=new JButton("Dispatch");
+        JButton printButton=new JButton("Print Passengers");
+        JButton incomeButton=new JButton("View Income");
+        JButton searchButton=new JButton("Search Passenger");
+        
+        panelArriba.add(venderButton);
+        panelArriba.add(cancelButton);
+        panelArriba.add(dispatchButton);
+        panelArriba.add(printButton);
+        panelArriba.add(incomeButton);
+        panelArriba.add(searchButton);
+        add(panelArriba, BorderLayout.NORTH);
+        
+        
         //botones
        
         

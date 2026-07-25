@@ -30,6 +30,23 @@ public class PalindromoAir {
             return index;
         }
 
-        return searchPassenger(nombre, index+1);
+        return searchPassenger(nombre, index + 1);
+    }
+
+    public boolean isPalindromo(String nombre) {
+        return isPalindromo(nombre, 0, nombre.length() - 1);
+    }
+
+    private boolean isPalindromo(String nombre, int inicio, int fin) {
+        if (inicio >= fin) {
+            return true;
+        }
+        
+        
+        
+        if (nombre.charAt(inicio) == nombre.charAt(fin)) {
+            return isPalindromo(nombre, inicio+1, fin-1);
+        }
+        return false;
     }
 }

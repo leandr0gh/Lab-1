@@ -5,13 +5,28 @@
  */
 package lab1;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  *
  * @author Ian Suazo Palao
  */
 public class PalindromoAir {
     private static Ticket[] asientos = new Ticket[30];
-    
+
+    // ===== Conexion con la interfaz grafica (GUI) =====
+    private JButton[] botonesAsientos;
+    private JTextArea consolaTexto;
+
+    public void setBotonesAsientos(JButton[] botones) {
+        this.botonesAsientos = botones;
+    }
+
+    public void setConsolaTexto(JTextArea consola) {
+        this.consolaTexto = consola;
+    }
+
      public int FirstAvailable(int index){
         if (index>=30) {
             return -1;
@@ -40,7 +55,6 @@ public class PalindromoAir {
     public double income (int index){
         double monto=0;
         
-
         if (index >= asientos.length){
             return 0;
         }
@@ -62,8 +76,6 @@ public class PalindromoAir {
         
         reset(index+1);
     }
-
-
     public int searchPassenger(String nombre, int index) {
         if (index >= 30) {
             return -1;
@@ -73,15 +85,11 @@ public class PalindromoAir {
         } else if (asientos[index].getNombre().equals(nombre)) {
             return index;
         }
-
-
         return searchPassenger(nombre, index + 1);
     }
-
     public boolean isPalindromo(String nombre) {
         return isPalindromo(nombre, 0, nombre.length() - 1);
     }
-
     private boolean isPalindromo(String nombre, int inicio, int fin) {
         if (inicio >= fin) {
             return true;
@@ -93,15 +101,14 @@ public class PalindromoAir {
             return isPalindromo(nombre, inicio+1, fin-1);
         }
         return false;
-
-
-
     }
+
+    
 
     public int sellTicket(String nombre) {
         int pos = FirstAvailable(0);
         if (pos == -1) {
-            System.out.println("No hay asientos disponibles. El avion va lleno.");
+            consolaTexto.append("No hay asientos disponibles. El avion va lleno.\n");
             return -1;
         }
         boolean esPali = isPalindromo(nombre);
@@ -112,35 +119,41 @@ public class PalindromoAir {
         }
         Ticket ticket = new Ticket(nombre, montoOriginal, montoFinal, esPali);
         asientos[pos] = ticket;
-        System.out.println("Ticket vendido a " + nombre + " en el asiento " + (pos + 1));
-        System.out.println("Monto pagado: L" + montoFinal + (esPali ? " (con descuento por palindromo)" : ""));
+
+        botonesAsientos[pos].setText(nombre);
+        botonesAsientos[pos].setBackground(esPali ? Color.BLUE : Color.RED);
+
+        consolaTexto.append("Ticket vendido a " + nombre + " en el asiento " + (pos + 1) + "\n");
+        consolaTexto.append("Monto pagado: L" + montoFinal + (esPali ? " (con descuento por palindromo)" : "") + "\n");
         return pos;
     }
-
     public boolean cancelTicket(String nombre) {
         int pos = searchPassenger(nombre, 0);
         if (pos == -1) {
-            System.out.println("No se encontro ningun pasajero con el nombre " + nombre);
+            consolaTexto.append("No se encontro ningun pasajero con el nombre " + nombre + "\n");
             return false;
         }
         asientos[pos] = null;
-        System.out.println("Se cancelo el ticket de " + nombre + ", asiento " + (pos + 1) + " libre.");
+
+        botonesAsientos[pos].setText("Asiento " + (pos + 1));
+        botonesAsientos[pos].setBackground(Color.GREEN);
+
+        consolaTexto.append("Se cancelo el ticket de " + nombre + ", asiento " + (pos + 1) + " libre.\n");
         return true;
     }
-
     public void dispatch() {
         double total = income(0);
-        System.out.println("Despacho del vuelo");
-        System.out.println("Ingresos totales: L" + total);
+        consolaTexto.append("Despacho del vuelo\n");
+        consolaTexto.append("Ingresos totales: L" + total + "\n");
         reset(0);
-        System.out.println("Avion limpio, todos los asientos estan libres otra vez.");
+
+        for (int i = 0; i < botonesAsientos.length; i++) {
+            botonesAsientos[i].setText("Asiento " + (i + 1));
+            botonesAsientos[i].setBackground(Color.GREEN);
+        }
+        consolaTexto.append("Avion limpio, todos los asientos estan libres otra vez.\n");
     }
     
     
     
 }
-
-    
-    
-
-

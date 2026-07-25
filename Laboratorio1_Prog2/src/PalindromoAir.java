@@ -45,4 +45,15 @@ public class PalindromoAir {
         // en caso de estar vacio solo se llama nuevamente para la recursividad
         return income(index+1);
     }
+    
+    public void reset (int index){
+        if (index >= asientos.length){
+            return;
+        }
+        
+        asientos[index]=null;
+        
+        reset(index+1);
+    }
+    
 }
